@@ -12,6 +12,11 @@ class SwaggerConfig {
 
     @Bean
     fun openAPI(): OpenAPI {
+        val httpsServer = Server().apply {
+            url = "https://swuweb-website-production.up.railway.app"
+            description = "Production (HTTPS)"
+        }
+
         return OpenAPI()
             .info(
                 Info()
@@ -20,10 +25,6 @@ class SwaggerConfig {
                     .version("v1")
                     .license(License().name("MIT"))
             )
-            .servers(
-                listOf(
-                    Server().url("https://swuweb-website-production.up.railway.app")
-                )
-            )
+            .servers(listOf(httpsServer))  
     }
 }
