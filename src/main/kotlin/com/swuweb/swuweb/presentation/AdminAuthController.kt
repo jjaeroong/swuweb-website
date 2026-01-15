@@ -28,7 +28,7 @@ class AdminController(
         return adminPasswordService.checkPassword(req)
     }
 
-    @GetMapping("/admin/applications")
+    @GetMapping("/applications")
     fun getAllLinksForAdmin(): AdminApplicationLinksResponse {
         return service.getAllLinksForAdmin()
     }
