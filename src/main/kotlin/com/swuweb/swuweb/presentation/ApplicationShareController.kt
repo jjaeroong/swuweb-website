@@ -1,6 +1,7 @@
 package com.swuweb.swuweb.presentation
 
 import com.swuweb.swuweb.application.dto.request.CreateApplicationShareRequest
+import com.swuweb.swuweb.application.dto.response.AdminApplicationLinksResponse
 import com.swuweb.swuweb.application.dto.response.ApplicationSharePublicResponse
 import com.swuweb.swuweb.application.dto.response.CreateApplicationShareResponse
 import com.swuweb.swuweb.application.service.ApplicationShareService
@@ -38,5 +39,10 @@ class ApplicationShareController(
         @PathVariable token: String
     ): ApplicationSharePublicResponse {
         return service.getPublicByToken(token)
+    }
+
+    @GetMapping("/admin/applications")
+    fun getAllLinksForAdmin(): AdminApplicationLinksResponse {
+        return service.getAllLinksForAdmin()
     }
 }
