@@ -40,9 +40,4 @@ class ApplicationShareController(
     ): ApplicationSharePublicResponse {
         return service.getPublicByToken(token)
     }
-
-    @GetMapping("/admin/applications")
-    fun getAllLinksForAdmin(): AdminApplicationLinksResponse {
-        return service.getAllLinksForAdmin()
-    }
 }
