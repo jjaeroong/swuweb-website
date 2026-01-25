@@ -3,12 +3,11 @@ package com.swuweb.swuweb.application.service
 
 import com.swuweb.swuweb.application.dto.request.CreateApplicationShareRequest
 import com.swuweb.swuweb.application.dto.response.AdminApplicationLinksResponse
+import com.swuweb.swuweb.application.dto.response.AnswerPublicItemResponse
+import com.swuweb.swuweb.application.dto.response.ApplicationSharePublicResponse
 import com.swuweb.swuweb.application.dto.response.CreateApplicationShareResponse
 import com.swuweb.swuweb.domain.entity.Answer
 import com.swuweb.swuweb.domain.entity.ApplicationShare
-import com.swuweb.swuweb.application.dto.response.ApplicationSharePublicResponse
-import com.swuweb.swuweb.application.dto.response.AnswerPublicItemResponse
-
 import com.swuweb.swuweb.domain.repository.ApplicationShareRepository
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Value
@@ -64,6 +63,14 @@ class ApplicationShareService(
                     )
                 }
         )
+    }
+
+    @Transactional
+    fun deleteById(applicationId: Long) {
+        if (!repository.existsById(applicationId)) {
+            throw IllegalArgumentException("지원서가 존재하지 않습니다. id=$applicationId")
+        }
+        repository.deleteById(applicationId)
     }
 
     fun getAllLinksForAdmin(): AdminApplicationLinksResponse {

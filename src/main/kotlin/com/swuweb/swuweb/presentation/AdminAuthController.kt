@@ -6,12 +6,8 @@ import com.swuweb.swuweb.application.dto.response.AdminPasswordCheckResponse
 import com.swuweb.swuweb.application.service.AdminPasswordService
 import com.swuweb.swuweb.application.service.ApplicationShareService
 import jakarta.validation.Valid
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/admin")
@@ -31,5 +27,11 @@ class AdminController(
     @GetMapping("/applications")
     fun getAllLinksForAdmin(): AdminApplicationLinksResponse {
         return service.getAllLinksForAdmin()
+    }
+
+    @DeleteMapping("/applications/{id}")
+    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+        service.deleteById(id)
+        return ResponseEntity.noContent().build()
     }
 }
