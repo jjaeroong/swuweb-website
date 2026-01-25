@@ -2,16 +2,12 @@ package com.swuweb.swuweb.application.service
 
 
 import com.swuweb.swuweb.application.dto.request.CreateApplicationShareRequest
-import com.swuweb.swuweb.application.dto.response.AdminApplicationLinksResponse
-import com.swuweb.swuweb.application.dto.response.AnswerPublicItemResponse
-import com.swuweb.swuweb.application.dto.response.ApplicationSharePublicResponse
-import com.swuweb.swuweb.application.dto.response.CreateApplicationShareResponse
+import com.swuweb.swuweb.application.dto.response.*
 import com.swuweb.swuweb.domain.entity.Answer
 import com.swuweb.swuweb.domain.entity.ApplicationShare
 import com.swuweb.swuweb.domain.repository.ApplicationShareRepository
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -74,13 +70,20 @@ class ApplicationShareService(
     }
 
     fun getAllLinksForAdmin(): AdminApplicationLinksResponse {
-        val apps = repository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
+        val apps = repository.findAllWithAnswersOrderByCreatedAtDesc()
 
-        val links = apps.map { app ->
-            "https://swuweb-homepage.vercel.app/public/application/${app.shareToken}"
+        val items = apps.map { app ->
+            val nameAnswer = app.answers.find { it.questionNum == 0L }
+
+            AdminApplicationLinkItemResponse(
+                applicationShareId = app.id,
+                name = nameAnswer?.content ?: "이름 없음",
+                link = "https://swuweb-homepage.vercel.app/public/application/${app.shareToken}"
+            )
+
         }
 
-        return AdminApplicationLinksResponse(links = links)
+        return AdminApplicationLinksResponse(applications = items)
     }
 }
 
