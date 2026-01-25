@@ -11,7 +11,8 @@ class WebCorsConfig : WebMvcConfigurer {
         registry.addMapping("/**")
             .allowedOrigins(
                 "http://localhost:5173",
-                "https://swuweb-homepage.vercel.app"
+                "https://swuweb-homepage.vercel.app",
+                "https://swuweb-website-production.up.railway.app"
             )
             .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
             .allowedHeaders("*")
